@@ -5,7 +5,7 @@ resource "azurerm_public_ip" "la_pip" {
   public_ip_address_allocation 	= "static"
 
   tags {
-	group = "EricExample"
+	group = "LinuxAcademy"
   }
 }
 
@@ -22,7 +22,7 @@ resource "azurerm_network_interface" "public_nic" {
     public_ip_address_id	= "${azurerm_public_ip.la_pip.id}"
   }
   tags {
-	group = "EricExample"
+	group = "LinuxAcademy"
   }
 }
 
@@ -33,7 +33,7 @@ resource "azurerm_public_ip" "la_db_pip" {
   public_ip_address_allocation = "static"
 
   tags {
-        group = "EricExample"
+        group = "LinuxAcademy"
   }
 }
 
@@ -51,6 +51,6 @@ resource "azurerm_network_interface" "private_nic" {
     public_ip_address_id        = "${azurerm_public_ip.la_db_pip.id}"
   }
   tags {
-	group = "EricExample"
+	group = "LinuxAcademy"
   }
 }

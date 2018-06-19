@@ -33,7 +33,7 @@ resource "azurerm_virtual_machine" "la_web" {
   }
 
   tags {
-    group = "EricExample"
+    group = "LinuxAcademy"
   }
 }
 
@@ -82,6 +82,6 @@ resource "azurerm_virtual_machine" "la_db" {
   }
 
   tags {
-    group = "EricExample"
+    group = "LinuxAcademy"
   }
 }
