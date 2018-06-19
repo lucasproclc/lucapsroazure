@@ -7,8 +7,7 @@ provider "azurerm" {
     subscription_id = "cc786216-c843-4350-ab79-a01e805af94c"
     client_id       = "d83e297a-2cff-4a8d-811b-b108451a5ce2"
     client_secret   = "Y8y6Ha4xmz4Z9qanogE9H14y8icOkaICGmf5tijCWB8="
-    tenant_id       = "e822651b-5027-4253-83f5-904854601a3bls
-	"
+    tenant_id       = "e822651b-5027-4253-83f5-904854601a3b"
 }
 
 # Create a resource group if it doesn’t exist
@@ -17,7 +16,7 @@ resource "azurerm_resource_group" "myterraformgroup" {
     location = "eastus"
 
     tags {
-        environment = "TRIANZ SCALR TERRAFORM DEMO"
+        environment = "Terraform Demo"
     }
 }
 
@@ -29,7 +28,7 @@ resource "azurerm_virtual_network" "myterraformnetwork" {
     resource_group_name = "${azurerm_resource_group.myterraformgroup.name}"
 
     tags {
-        environment = "TRIANZ SCALR TERRAFORM DEMO"
+        environment = "Terraform Demo"
     }
 }
 
@@ -49,7 +48,7 @@ resource "azurerm_public_ip" "myterraformpublicip" {
     public_ip_address_allocation = "dynamic"
 
     tags {
-        environment = "TRIANZ SCALR TERRAFORM DEMO"
+        environment = "Terraform Demo"
     }
 }
 
@@ -72,7 +71,7 @@ resource "azurerm_network_security_group" "myterraformnsg" {
     }
 
     tags {
-        environment = "TRIANZ SCALR TERRAFORM DEMO"
+        environment = "Terraform Demo"
     }
 }
 
@@ -91,7 +90,7 @@ resource "azurerm_network_interface" "myterraformnic" {
     }
 
     tags {
-        environment = "TRIANZ SCALR TERRAFORM DEMO"
+        environment = "Terraform Demo"
     }
 }
 
@@ -114,7 +113,51 @@ resource "azurerm_storage_account" "mystorageaccount" {
     account_replication_type    = "LRS"
 
     tags {
-        environment = "TRIANZ SCALR TERRAFORM DEMO"
+        environment = "Terraform Demo"
     }
 }
 
+# Create virtual machine
+resource "azurerm_virtual_machine" "myterraformvm" {
+    name                  = "myVM"
+    location              = "eastus"
+    resource_group_name   = "${azurerm_resource_group.myterraformgroup.name}"
+    network_interface_ids = ["${azurerm_network_interface.myterraformnic.id}"]
+    vm_size               = "Standard_DS1_v2"
+
+    storage_os_disk {
+        name              = "myOsDisk"
+        caching           = "ReadWrite"
+        create_option     = "FromImage"
+        managed_disk_type = "Premium_LRS"
+    }
+
+    storage_image_reference {
+        publisher = "Canonical"
+        offer     = "UbuntuServer"
+        sku       = "16.04.0-LTS"
+        version   = "latest"
+    }
+
+    os_profile {
+        computer_name  = "myvm"
+        admin_username = "azureuser"
+    }
+
+    os_profile_linux_config {
+        disable_password_authentication = true
+        ssh_keys {
+            path     = "/home/azureuser/.ssh/authorized_keys"
+            key_data = "ssh-rsa AAAAB3Nz{snip}hwhqT9h"
+        }
+    }
+
+    boot_diagnostics {
+        enabled = "true"
+        storage_uri = "${azurerm_storage_account.mystorageaccount.primary_blob_endpoint}"
+    }
+
+    tags {
+        environment = "Terraform Demo"
+    }
+}
