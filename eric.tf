@@ -5,9 +5,9 @@ variable "resourcename" {
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
     subscription_id = ""
-    client_id       = "d83e297a-2cff-4a8d-811b-b108451a5ce2"
-    client_secret   = "RxkJg4vyI+GVobgAIRtAAuR+35aiFyLfmOgAmN/6K9g="
-    tenant_id       = "e822651b-5027-4253-83f5-904854601a3b"
+    client_id       = "11"
+    client_secret   = "11"
+    tenant_id       = "11"
 }
 
 # Create a resource group if it doesn’t exist
