@@ -11,16 +11,12 @@ resource "azurerm_virtual_network" "network" {
   
   subnet {
     name = "public"
-    address_prefix = "10.51.1.0/24"
+    address_prefix = "10.1.1.0/24"
  }
   
   subnet {
     name = "private"
-    address_prefix = "10.51.2.0/24"
+    address_prefix = "10.1.2.0/24"
  }
-  
-  subnet {
-    name  = "public2"
-    address_prefix  = "10.51.3.0/24"
-  }
-}
+}  
+
