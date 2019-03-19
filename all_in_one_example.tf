@@ -1,5 +1,5 @@
 variable "resourcename" {
-  default = "myResourceGroup"
+  default = "ExampleGroup"
 }
 
 # Configure the Microsoft Azure Provider
@@ -11,7 +11,7 @@ provider "azurerm" {
 }
 
 # Create a resource group if it doesn’t exist
-resource "azurerm_resource_group" "myterraformgroup" {
+resource "azurerm_resource_group" "Examplegroup" {
     name     = "myResourceGroup"
     location = "eastus"
 
@@ -21,7 +21,7 @@ resource "azurerm_resource_group" "myterraformgroup" {
 }
 
 # Create virtual network
-resource "azurerm_virtual_network" "myterraformnetwork" {
+resource "azurerm_virtual_network" "Examplenetwork" {
     name                = "myVnet"
     address_space       = ["10.0.0.0/16"]
     location            = "eastus"
@@ -33,7 +33,7 @@ resource "azurerm_virtual_network" "myterraformnetwork" {
 }
 
 # Create subnet
-resource "azurerm_subnet" "myterraformsubnet" {
+resource "azurerm_subnet" "Examplesubnet" {
     name                 = "mySubnet"
     resource_group_name  = "${azurerm_resource_group.myterraformgroup.name}"
     virtual_network_name = "${azurerm_virtual_network.myterraformnetwork.name}"
